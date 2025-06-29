@@ -1,0 +1,10 @@
+services:
+  n8n:
+    image: skynono/n8n:dev
+    ports:
+      - '5678:5678'
+    volumes:
+      - ./.n8n:/home/node/.n8n
+    env_file:
+      - .env
+    restart: always
