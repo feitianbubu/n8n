@@ -33,6 +33,27 @@ export class LicenseService {
 	) {}
 
 	async getLicenseData() {
+		if (process.env.NODE_ENV === 'development') {
+			return {
+				usage: {
+					activeWorkflowTriggers: {
+						value: 10,
+						limit: 1000,
+						warningThreshold: 0.8,
+					},
+					workflowsHavingEvaluations: {
+						value: 2,
+						limit: 100,
+					},
+				},
+				license: {
+					planId: 'enterprise-product-id',
+					planName: 'Enterprise',
+					consumerId: 'mock-consumer-id',
+					environment: 'production',
+				},
+			};
+		}
 		const triggerCount = await this.workflowRepository.getActiveTriggerCount();
 		const workflowsWithEvaluationsCount =
 			await this.workflowRepository.getWorkflowsWithEvaluationCount();

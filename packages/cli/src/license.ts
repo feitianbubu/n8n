@@ -44,6 +44,23 @@ export class License implements LicenseProvider {
 		private readonly globalConfig: GlobalConfig,
 	) {
 		this.logger = this.logger.scoped('license');
+
+		if (process.env.NODE_ENV === 'development') {
+			this.isSamlEnabled = () => true;
+			this.isLdapEnabled = () => true;
+			this.isSharingEnabled = () => true;
+			this.isLogStreamingEnabled = () => true;
+			this.isAdvancedPermissionsLicensed = () => true;
+			this.isWorkflowHistoryLicensed = () => true;
+			this.isApiKeyScopesEnabled = () => true;
+			this.isVariablesEnabled = () => true;
+			this.isSourceControlLicensed = () => true;
+			this.isDebugInEditorLicensed = () => true;
+			this.isWorkerViewLicensed = () => true;
+			this.isExternalSecretsEnabled = () => true;
+			this.isAdvancedExecutionFiltersEnabled = () => true;
+			this.isLicensed = (feature) => (feature === 'feat:showNonProdBanner' ? false : true);
+		}
 	}
 
 	async init({
